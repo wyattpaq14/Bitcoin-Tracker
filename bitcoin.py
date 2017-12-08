@@ -1,8 +1,8 @@
 import requests
 from flask import render_template, request, flash, Flask
-from bs4 import BeautifulSoup
 import json
 from threading import Timer
+import time
 
 app = Flask(__name__)
 
@@ -10,7 +10,6 @@ myList = ""
  
 @app.route("/")
 def index():
-    Timer(5.0, index).start()
 
     url = 'http://api.coindesk.com/v1/bpi/currentprice.json'
 
@@ -21,9 +20,9 @@ def index():
     
     myList = python_obj["bpi"]["USD"]["rate_float"]
 
-
     return render_template('index.html', variable=myList)
-index()
+
+
 
  
 if __name__ == "__main__":
