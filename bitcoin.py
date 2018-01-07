@@ -11,14 +11,6 @@ myList = ""
 @app.route("/")
 def index():
 
-    url = 'http://api.coindesk.com/v1/bpi/currentprice.json'
-
-    r = requests.get(url)
- 
-    json_data = r.text
-    python_obj = json.loads(json_data)
-    
-    myList = python_obj["bpi"]["USD"]["rate_float"]
 
     return render_template('index.html', variable=myList)
 

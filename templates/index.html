@@ -1,21 +1,47 @@
+<!DOCTYPE html>
 <html>
-    <head>
-            <meta http-equiv="refresh" content="30" >
-            <style>
-                    h1 {color:red;
-                        font-size: 100px;}
-                    h2 {color:blue;
-                        font-size: 94px;}
-                    div {
-                        text-align: center;
-                    }
 
-            </style>
-    </head>
-    <body>
-        <div>
-        <h1>Bitcoin's Current Price</h1>
-        <h2>{{ variable }}</h2>
+<body>
+
+    <div id="demo">
+        <h1>The XMLHttpRequest Object</h1>
+        <button type="button" onclick="fetchInfo()">Get Content</button>
+        <div id="output" style="width:600px; height:500px;"></div>
     </div>
-    </body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        function fetchInfo() {
+            var url = "https://api.coinbase.com/v2/accounts";
+            // url += '?' + $.param({
+
+            // });
+            var now = new Date();
+            var time = now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds();
+
+
+            console.log("DATE: " + time)
+
+            $.ajax({
+                url: url,
+                method: 'GET',
+                headers: {
+                    'CB-VERSION': "2017-12-07",
+                    'CB-ACCESS-KEY': "",
+                    'CB-ACCESS-SIGN': "Hello world!",
+                    'CB-ACCESS-TIMESTAMP': time
+                },
+            }).done(function (result) {
+                for (i = 0; i < result.results.length; i++) {
+                    document.querySelector('#output').innerHTML += result.results[i].title + ' <a href="' + result.results[i].url + '"> link </a>' + '<br />';
+                }
+            }).fail(function (err) {
+                console.log(err)
+                throw err;
+            });
+
+        }
+    </script>
+
+</body>
+
 </html>
